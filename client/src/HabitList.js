@@ -10,7 +10,7 @@ import {
   BrowserRouter as Router,
   Redirect
 } from 'react-router-dom';
-
+import Navbar from './Navbar';
 //material-ui
 import {RaisedButton, SelectField, RadioButton, RadioButtonGroup,
   TextField, FlatButton, List, ListItem, Subheader, Divider, Checkbox, IconMenu,
@@ -132,21 +132,20 @@ class HabitList extends Component {
       date: today
     }).then(result => {
       let newweeklyGoal = result.data.weeklyGoal
-      let newCompleteArray = []
+      let newCompleteArray = [];
+      var now = new Date();
+      var day = now.getDayName();
       for(let j=0; j<result.data.habits.length; j++){
           //controlling for weekend activities
-        if(weekend.getDay() === 6 || weekend.getDay() === 0){
-          if(result.data.habits.goal != 5){
+          console.log(day)
+          console.log(result.data.habits[j].goal);
+        if((day === 'Saturday' || day === 'Sunday') && (result.data.habits[j].goal === 7 || result.data.habits[j].goal === 2)){
             newCompleteArray.push(result.data.habits[j].completed)
-          }else{
-            //do nothing
-          }
-        }else{
-          if(result.data.habits.goal != 2){
+        }else if((result.data.habits[j].goal === 7 || result.data.habits[j].goal === 5) && (day === "Monday" || day === "Tuesday"|| day === "Wednesday"|| day === "Thursday"|| day === "Friday")){
             newCompleteArray.push(result.data.habits[j].completed)
           }
-        }
       }
+
       //fetches all habits from user
       let newArray = this.state.habitArray
       newArray.push(result.data.habits)
@@ -349,30 +348,17 @@ class HabitList extends Component {
 
       //today's to do List population logic
       let todayArr = []
-      let everydayArr = []
-      let weekdayArr = []
-      let weekendArr = []
         for(let i = 0; i < this.state.habitArray.length; i++){
-          if(this.state.habitArray[i].goal === 7){
-            everydayArr.push(this.state.habitArray[i])
-          }else if(this.state.habitArray[i].goal === 5){
-            weekdayArr.push(this.state.habitArray[i])
-          }else if(this.state.habitArray[i].goal === 2){
-            weekendArr.push(this.state.habitArray[i])
+          if(this.state.habitArray[i].goal === 7 || (this.state.habitArray[i].goal === 5 && (day === "Monday" || day === "Tuesday"|| day === "Wednesday"|| day === "Thursday"|| day === "Friday"))){
+          todayArr.push(this.state.habitArray[i])
+          }else if(this.state.habitArray[i].goal === 7 || (this.state.habitArray[i].goal === 2 && (day === "Saturday" || day === "Sunday"))){
+            todayArr.push(this.state.habitArray[i])
           }
         }
-        //TODO: need to handle weekly todos
-      if(day === "Saturday" || day === "Sunday"){
-        let newArr = weekendArr.concat(everydayArr)
-        todayArr = newArr
-      }else{
-        let newArr = weekdayArr.concat(everydayArr)
-        todayArr = newArr
-      }
-
 
     return(
       <div style={styles.bg}>
+        <Navbar user={this.props.user} lift={this.props.liftTokenToState} signOut={this.props.signOut} />
         <Row>
         <Col xs={12}>
           <Row>
@@ -420,6 +406,7 @@ class HabitList extends Component {
                       <Row>
                         <Col xs={12}>
                           <ListItem
+                            key={index}
                             leftCheckbox={<Checkbox onClick={(e) => this.handleDate(e)}
                                                     disabled={this.state.completeArrayDaily[index]}
                                                     value={habit.name}

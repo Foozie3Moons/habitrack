@@ -32,7 +32,6 @@ router.post('/dates', function(req,res,next){
         if(user.habits[i].name === habitName){
            dates = user.habits[i].dates;
            res.send(dates);
-           console.log(dates);
         };
     };
   });
@@ -79,9 +78,15 @@ router.post('/new', function(req,res,next){
     { "_id": req.body.user.id},update,{new:true},
     function(err,user) {
       let newHabitCompletedArray = []
-      for(let i=0; i <user.habits.length; i++){
-        if(user.habits[i].goal !=2){
-          newHabitCompletedArray.push(user.habits[i].completed)
+      var now = new Date();
+      var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+      var day = weekday[now.getDay()];
+
+      for(let m=0; m< user.habits.length; m++){
+        if((user.habits[m].goal ===2 && (day === 'Saturday' || day === 'Sunday')) || user.habits[m].goal === 7){
+          newHabitCompletedArray.push(user.habits[m].completed)
+        }else if((user.habits[m].goal ===5 && (day === "Monday" || day === "Tuesday"|| day === "Wednesday"|| day === "Thursday"|| day === "Friday")) || user.habits[m].goal === 7){
+          newHabitCompletedArray.push(user.habits[m].completed)
         }
       }
       user.save();
@@ -137,10 +142,16 @@ router.post('/date', function(req, res, next){
                }
              }
           };
+          var now = new Date();
+          var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+          var day = weekday[now.getDay()];
+
           for(let m=0; m< userVar.habits.length; m++){
-            if(userVar.habits[m].goal ===2){
-              //do nothing
-            }else{
+            if(userVar.habits[m].goal ===2 && (day === 'Saturday' || day === 'Sunday')){
+              habitCompletedArray.push(userVar.habits[m].completed)
+            }else if(userVar.habits[m].goal ===5 && (day === "Monday" || day === "Tuesday"|| day === "Wednesday"|| day === "Thursday"|| day === "Friday")){
+              habitCompletedArray.push(userVar.habits[m].completed)
+            }else if(userVar.habits[m].goal === 7){
               habitCompletedArray.push(userVar.habits[m].completed)
             }
           }

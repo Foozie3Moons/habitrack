@@ -60,7 +60,7 @@ class Navbar extends Component {
     super(props)
     this.state = {
       user: props.user,
-      token: props.lift
+      token: props.lift,
     }
   }
   componentWillReceiveProps = (nextProps) => {
@@ -69,7 +69,6 @@ class Navbar extends Component {
 
 
   render() {
-
     return (
       <div>
         <AppBar
@@ -87,10 +86,10 @@ class Navbar extends Component {
           iconElementRight={this.state.user.id ? <Logged user={this.state.user} signOut={this.props.signOut}/> : (
             <div className='nav-buttons'>
               <div className='nav-button'>
-                <Signup lift={this.props.lift} primary={false}/>
+                <Signup lift={this.props.lift} handleRedirect={this.props.redirect} primary={false}/>
               </div>
               <div className='nav-button'>
-                <Login lift={this.props.lift}/>
+                <Login handleRedirect={this.props.redirect} lift={this.props.lift}/>
               </div>
             </div>
 

@@ -18,14 +18,14 @@ class App extends Component {
       token: '',
       user: {},
       habit: {},
-      dates: []
+      dates: [],
     }
   }
 
   liftTokenToState = (data) => {
     this.setState({
       token: data.token,
-      user: data.user
+      user: data.user,
     })
   }
 
@@ -45,7 +45,7 @@ class App extends Component {
 
   isLoggedIn = () => {
     // If there is a token in localStorage
-    console.log('did something');
+    // console.log('did something');
     var token = localStorage.getItem('mernToken')
     if (token === 'undefined' || token === null || token === '' || token === undefined) {
       localStorage.removeItem('mernToken')
@@ -60,7 +60,7 @@ class App extends Component {
       }).then(response => {
         //   Store the token and user
         localStorage.setItem('mernToken', response.data.token)
-        console.log(localStorage.mernToken);
+        // console.log(localStorage.mernToken);
         this.setState({
           token: response.data.token,
           user: response.data.user
@@ -79,32 +79,33 @@ class App extends Component {
   }
 
   render() {
+
     let switchStatement = '';
     if (Object.keys(this.state.user).length === 0) {
        switchStatement =
+
         <Switch>
           <Route exact path="/" render={() => <Main user={this.state.user} lift={this.liftTokenToState}/>} />
           <Route path="/display" render={Restricted} />
           <Route path="/habit" render={Restricted} />
           <Route path="*" render={NotFound} status={404} />
         </Switch>
+
     } else {
        switchStatement =
         <Switch>
-          <Route exact path="/" render={() => <Main user={this.state.user} lift={this.liftTokenToState}/>} />
-          <Route path="/display" render={() => <HabitList user={this.state.user} isLoggedIn={this.isLoggedIn} liftHabit={this.liftHabitToState}/>}/>
-          <Route path="/habit" render={() => <Habit user={this.state.user} isLoggedIn={this.isLoggedIn} habit={this.state.habit} dates={this.state.dates}/>} />
+          <Route exact path="/" render={() => <Main user={this.state.user} lift={this.liftTokenToState} signOut={this.signOut}/>} />
+          <Route path="/display" render={() => <HabitList user={this.state.user} isLoggedIn={this.isLoggedIn} liftHabit={this.liftHabitToState} lift={this.liftTokenToState} signOut={this.signOut}/>}/>
+          <Route path="/habit" render={() => <Habit user={this.state.user} isLoggedIn={this.isLoggedIn} habit={this.state.habit} dates={this.state.dates} lift={this.liftTokenToState} signOut={this.signOut}/>} />
           <Route path="/fakeData" component={Test}/>
           <Route path="*" render={NotFound} status={404} />
         </Switch>
+
     }
     return (
       <div>
         <Router>
-          <div>
-            <Navbar user={this.state.user} lift={this.liftTokenToState} signOut={this.signOut} />
             {switchStatement}
-          </div>
         </Router>
       </div>
     );

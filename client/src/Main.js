@@ -3,6 +3,7 @@ import Signup from './Signup';
 import Login from './Login';
 import { Row, Col } from 'react-flexbox-grid';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import Navbar from './Navbar';
 import { MuiThemeProvider, AppBar, IconButton, Paper, RaisedButton } from 'material-ui';
 import dash from './img/dash.png';
 import line from './img/line.png';
@@ -75,7 +76,7 @@ class Main extends Component {
 
 		return (
 			<div id="mainPage">
-
+        <Navbar user={this.props.user} lift={this.props.liftTokenToState} redirect={this.handleRedirect} signOut={this.props.signOut} />
 				<div className="spacer"></div>
 
 				<div id="welcome">
@@ -98,7 +99,7 @@ class Main extends Component {
                   onClick={this.handleRedirect}
                 />
               ) : (
-                <Signup user={this.props.user} lift={this.props.lift} primary={true} />
+                <Signup user={this.props.user} lift={this.props.lift} handleRedirect={this.handleRedirect} primary={true} />
               )
             }
 
@@ -319,7 +320,7 @@ class Main extends Component {
             <a href="https://www.linkedin.com/in/lauren-ashley-perez/"><i className="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
             </p>
 						<p>
-             Front-End Development, Data Visualization 
+             Front-End Development, Data Visualization
              </p>
 					</Col>
 				</Row>
