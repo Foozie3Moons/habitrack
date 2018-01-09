@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Main from './Main';
-import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer} from 'recharts';
-import './RadarChart.css';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer} from 'recharts';
+import '../../Styles/RadarChart.css';
 
 class ResponsiveRadarChart extends Component {
   constructor(props) {

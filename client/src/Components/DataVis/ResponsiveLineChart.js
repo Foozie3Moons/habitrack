@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import Measure from 'react-measure';
 import classNames from 'classnames';
 import LineChart from './LineChart';
-import './Responsive.css';
-import { Row, Col } from 'react-flexbox-grid'
+import '../../Styles/Responsive.css';
 
 class ResponsiveLineChart extends Component {
   state = {

@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import HabitList from './HabitList';
 import { Row, Col } from 'react-flexbox-grid';
-import RadarChart from './RadarChart';
-import NotEnoughData from './NotEnoughData';
-import Navbar from './Navbar';
+import RadarChart from '../DataVis/RadarChart';
+import NotEnoughData from '../Other/NotEnoughData';
+import Navbar from '../Main/Navigation/Navbar';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText,
-  Subheader, RaisedButton, Drawer, List, ListItem} from 'material-ui';
+import {Card, CardTitle, RaisedButton, Drawer, List, ListItem} from 'material-ui';
 
-import {
-  BrowserRouter as Router,
-  Redirect
-} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 
 
 const styles = {
@@ -76,7 +71,7 @@ class Habit extends Component {
 
     return(
       <div>
-        <Navbar user={this.props.user} lift={this.props.liftTokenToState} signOut={this.props.signOut} />
+        <Navbar user={this.props.user} lift={this.props.lift} signOut={this.props.signOut} />
           <Drawer
             docked={false}
             width={200}

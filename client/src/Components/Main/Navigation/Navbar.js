@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { AppBar, Drawer, IconMenu, MenuItem, RaisedButton, IconButton, Toggle } from 'material-ui';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import { AppBar, IconMenu, MenuItem, IconButton } from 'material-ui';
 import {
   BrowserRouter as Router,
   Redirect, Link
 } from 'react-router-dom';
 import Signup from './Signup';
 import Login from './Login';
-import {cyanA400, grey900, grey800, grey400 } from 'material-ui/styles/colors';
+import {cyanA400, grey900, grey400 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
-import cube from './img/cube.png';
 import {FlatButton } from 'material-ui';
 
 const buttonStyle= {
@@ -28,16 +25,16 @@ const Logged = (props) => {
         {...props}
         iconButtonElement={
           <div>
-          <IconButton>
-          <Avatar
-            color={grey900}
-            backgroundColor={grey400}
-            size={40}
-            style={style}
-          >
-          {letter}
-          </Avatar>
-          </IconButton>
+            <IconButton>
+              <Avatar
+                color={grey900}
+                backgroundColor={grey400}
+                size={40}
+                style={style}
+              >
+              {letter}
+              </Avatar>
+            </IconButton>
           </div>
         }
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -74,7 +71,6 @@ class Navbar extends Component {
         <AppBar
           title={<FlatButton
                 containerElement={<Link to="/" />}
-                linkButton={true}
                 label={"Habitrack"}
                 labelStyle={{ fontSize: '1em'}}
                 className={"logoStyle"}
@@ -86,10 +82,10 @@ class Navbar extends Component {
           iconElementRight={this.state.user.id ? <Logged user={this.state.user} signOut={this.props.signOut}/> : (
             <div className='nav-buttons'>
               <div className='nav-button'>
-                <Signup lift={this.props.lift} handleRedirect={this.props.redirect} primary={false}/>
+                <Signup lift={this.props.lift} handleRedirect={this.props.handleRedirect} primary={false}/>
               </div>
               <div className='nav-button'>
-                <Login handleRedirect={this.props.redirect} lift={this.props.lift}/>
+                <Login handleRedirect={this.props.handleRedirect} lift={this.props.lift}/>
               </div>
             </div>
 

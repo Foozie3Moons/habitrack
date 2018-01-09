@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
-import Dialog from 'material-ui/Dialog';
-import CircularProgress from 'material-ui/CircularProgress';
-import { Row, Col, Grid } from 'react-flexbox-grid';
-import Flash from './Flash';
-import { Redirect } from 'react-router'
+import '../../../Styles/App.css';
+import {RaisedButton, FlatButton, TextField, Dialog } from 'material-ui';
+import { Row } from 'react-flexbox-grid';
+import Flash from '../../Other/Flash';
 
 class Login extends Component {
   constructor(props) {
@@ -40,8 +35,9 @@ class Login extends Component {
     }).then((result) => {
       localStorage.setItem('mernToken', result.data.token);
       this.props.lift(result.data);
-      this.handleClose();
+      console.log("step before handleRedirect")
       this.props.handleRedirect();
+      this.handleClose();
     }).catch((error) => {
       this.setState({alert: {type: 'error', msg: error.response.data.message}, showAlert: true});
     });

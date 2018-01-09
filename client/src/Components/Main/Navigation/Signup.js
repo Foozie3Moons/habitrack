@@ -4,8 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
-import { Col, Row } from 'react-flexbox-grid';
-import Flash from './Flash';
+import { Row } from 'react-flexbox-grid';
+import Flash from '../../Other/Flash';
 
 class Signup extends Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class Signup extends Component {
       console.log(result)
       localStorage.setItem('mernToken', result.data.token);
       this.props.lift(result.data);
-      this.handleClose();
+      // this.handleClose();
       this.props.handleRedirect();
     }).catch(error => {
       console.log(error)
